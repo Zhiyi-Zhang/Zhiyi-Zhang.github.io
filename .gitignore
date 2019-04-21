@@ -1,0 +1,9 @@
+_site
+.sass-cache
+.jekyll-metadata
+*DS_Store
+.bundle/
+.byebug_history
+.ruby-gemset
+.ruby-version
+tmp/*

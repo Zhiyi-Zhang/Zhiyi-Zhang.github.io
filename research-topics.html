@@ -1,0 +1,108 @@
+---
+layout: default
+title: zhiyi-research-topics
+---
+<section>
+	<header class="main">
+		<h1>Research Topics</h1>
+	</header>
+
+	<span class="image right"><img src="images/security.jpg" alt="" /></span>
+
+	<p>My research focus on network security and computer networking. I am especially interested in Distributed
+		Deny-of-Serivce (DDoS) defense, System security of Internet-of-Things (IoT), Distributed ledger system.</p>
+
+	<p>Named Data Networking (NDN) is a proposed future Internet architecture which considers security from the first day
+		of its design. NDN requires every data publisher (called producer) to digitally sign their content. I have worked on
+		certificate management over NDN, access control over NDN, and I am also contributing to the core NDN software like
+		ndn-cxx, ndn-lite, and NFD.</p>
+
+	<hr class="major" />
+
+	<h2>Distributed Ledger System Based on DAG</h2>
+
+	<p>With the ever growing Internet of Things (IoT) market, ledger systems are facing new challenges to efficiently
+		store and secure enormous customer records collected by the IoT devices. The authenticity, availability, and
+		integrity of these records are critically important for both business providers and customers. In this work, we
+		propse DLedger, a lightweight and resilient distributed ledger system. Instead of a single chain of blocks, DLedger
+		builds the ledger over a directed acyclic graph (DAG), so that its operations can tolerate network partition and
+		intermittent connectivity. Instead of compute-intensive Proof-of-Work (PoW), DLedger utilizes Proof-of-Authentication
+		(PoA), whose light-weight operations are IoT-friendly, to achieve consensus. </p>
+
+	<ul class="actions">
+		<li><a href="https://arxiv.org/abs/1902.09031" class="button">Link to preprint paper</a></li>
+	</ul>
+
+	<hr class="major" />
+
+	<h2>DDoS defense via Stateful forwarding plane</h2>
+
+	<p>Distributed Denial of Service (DDoS) attacks have plagued the Internet for decades, but defenses have not
+		fundamentally outpaced attackers. Instead, the size and rate of growth in attacks have actually outpaced carriers'
+		and DDoS mitigation services' growth. In this work, we comprehensively examine ways in which Named Data Networking
+		(NDN), a proposed data-centric Internet architecture, fundamentally addresses some of the principle weaknesses in
+		today's DDoS defenses in IP networking. We argue that NDN's architectural changes (even when incrementally deployed)
+		can make DDoS attacks fundamentally more difficult to launch and less effective. We present a new DDoS mitigation
+		solution -- Fine-grained Interest Traffic Throttling FITT, to leverage NDN's features to combat DDoS in the Internet
+		of Things (IoT) age. FITT enables the network to detect DDoS directly from feedback from victims, throttle DDoS
+		traffic along its exact path in the network, and perform reinforcement control over the misbehaving entities at their
+		sources. In cases like the Mirai attacks, where smart IoT devices (smart cameras, refrigerators, etc.) were able to
+		cripple high-capacity service providers using diverse DDoS Tactics Techniques and Procedures (TTPs), FITT would be
+		able to precisely squelch the attack traffic at its distributed sources, without disrupting other legitimate
+		application traffic running on the same devices. FITT offers an incrementally deployable solution for service
+		providers to effectuate the application-level remediation at the sources, which remains unattainable in today's DDoS
+		market. Our extensive simulations results show that FITT can effectively throttle attack traffic in a short time and
+		achieve over 99% legitimate traffic. </p>
+
+	<ul class="actions">
+		<li><a href="https://arxiv.org/abs/1902.09033" class="button">Link to preprint paper</a></li>
+	</ul>
+
+	<hr class="major" />
+
+	<h2>Internet of Things (IoT) over Named Data Networking (NDN)</h2>
+
+	<span class="image left"><img src="images/ndn-lite-logo.jpg" alt="" /></span>
+
+	<p>The Named Data Networking (NDN) architecture provides simple solutions to the communication needs of Internet of
+		Things (IoT) in terms of ease-of-use, security, and content delivery. To utilize the desirable properties of NDN
+		architecture in IoT scenarios, we are working to provide an integrated framework, dubbed NDNoT, to support IoT over
+		NDN. NDNoT provides solutions to auto conguration, service discovery, data-centric security, content delivery, and
+		other needs of IoT application developers. Utilizing NDN naming conventions, NDNoT aims to create an open environment
+		where IoT applications and different services can easily cooperate and work together. </p>
+
+	<ul class="actions">
+		<li><a href="https://conferences.sigcomm.org/acm-icn/2018/index.php" class="button">Link to our ACM ICN 2018 Poster
+				(Best Poster Award)</a></li>
+	</ul>
+
+	<hr class="major" />
+
+	<h2>Name-based Access Control over Named Data Networking (NDN)</h2>
+	<p>Confidentiality of data in Named Data Networking (NDN) architecture can be directly ensured through encryption by
+		protecting the data packets rather than relying on a secured host or channel as any traditional perimeter-based
+		access control models do. However, the use of encryption requires efficient and easy-to-use mechanisms for access
+		management and key distribution. We presents a Name-Based Access Control (NAC) scheme that leverages specially
+		crafted NDN naming conventions (NAC naming conventions) to define and realize access control policies and automate
+		the distribution of encryption and decryption keys. Moreover, the structured NDN naming allows NAC to support
+		fine-grained control policies in a simple yet powerful way. </p>
+
+	<ul class="actions">
+		<li><a href="https://events.afcea.org/Milcom18/Public/Enter.aspx" class="button">Link to our IEEE MILCOM 2018 Paper</a></li>
+	</ul>
+
+	<hr class="major" />
+
+	<h2>Certificate Management over Named Data Networking (NDN)</h2>
+	<p>Named Data Networking (NDN) secures communication at the network layer by requiring all data packets to be signed
+		when produced, ensuring data authentication and integrity. As obtaining certicates is essential to signature signing
+		and verication, to widely apply digital signature at the network layer, NDN requires usable mechanisms to handle
+		certicate issuance, renewal, and revocation. We presents NDNCERT, a distributed certicate management system.
+		NDNCERT leverages the notion of named data in NDN and provides an automated mechanism for network nodes, users,
+		applications, and application instances to obtain certicates. NDNCERT also enables namespace owners to easily
+		delegate subnamespaces to legitimate parties either within the same network node or across dierent nodes. </p>
+
+	<ul class="actions">
+		<li><a href="https://github.com/named-data/ndncert" class="button">Link to our GitHub Repo</a></li>
+	</ul>
+</section>
