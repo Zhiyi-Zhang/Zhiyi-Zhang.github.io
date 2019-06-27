@@ -21,7 +21,7 @@ Step 2
 Download the configuration file (out-of-band bootstrapping).
 
 ```
-curl -o /usr/local/etc/ndncert/client.conf https://zhiyi-zhang.com/client-conf.txt
+curl -o /usr/local/etc/ndncert/client.conf https://zhiyi-zhang.com/content/client-conf.txt
 ```
 
 Step 3
