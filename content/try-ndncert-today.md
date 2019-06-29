@@ -3,6 +3,8 @@ Try NDNCERT
 
 By Zhiyi Zhang (zhiyi@cs.ucla.edu)
 
+Last modified: Jun 27 2019
+
 Step 1
 ------
 Download and install NDNCERT (https://github.com/named-data/ndncert).
