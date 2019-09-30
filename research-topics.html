@@ -9,17 +9,85 @@ title: zhiyi-research-topics
 
 	<span class="image right"><img src="images/security.jpg" alt="" /></span>
 
-	<p>My research focus on network security and computer networking. I am especially interested in Distributed
-		Deny-of-Serivce (DDoS) defense, System security of Internet-of-Things (IoT), Distributed ledger system.</p>
+	<p>My research topics fall into /system/security, including security and privacy enhancement in network system,
+		distributed system, and data engineering. Since I started my Ph.D., I am trying to solve real-world security and
+		privacy issues.</p>
 
 	<p>Named Data Networking (NDN) is a proposed future Internet architecture which considers security from the first day
 		of its design. NDN requires every data publisher (called producer) to digitally sign their content. I have worked on
-		certificate management over NDN, access control over NDN, and I am also contributing to the core NDN software like
+		certificate management and access control over NDN, and I am also contributing to the core NDN software like
 		ndn-cxx, ndn-lite, and NFD.</p>
+
 
 	<hr class="major" />
 
-	<h2>Distributed Ledger System</h2>
+	<h2>Secure Smart Home IoT System</h2>
+
+	<span class="image left"><img src="images/ndn-lite-logo.jpg" alt="" /></span>
+
+	<p>What distinguishes our work is that we are trying to localize the security to empower end users.
+		With current solutions, the device authentication and access control by default go through the cloud (e.g., you need Internet connection to add a new device to your system) and the security largely relies on IoT app developers’ careful work.
+		In our work, NDN-LITE, we are building security independent from the cloud and all the security checking/verification is automatically enforced by our system framework and is transparent to developers.</p>
+
+		<p>NDN-LITE is over Named Data Networking (NDN), an architecture that provides simple solutions to the communication needs of Internet of Things (IoT) in terms of ease-of-use, security, and content delivery.
+		To utilize the desirable properties of NDN architecture in IoT scenarios, we are working to provide an integrated framework, dubbed NDN-LITE, to support IoT over NDN.
+		NDN-LITE provides solutions to auto conguration, service discovery, data-centric security, content delivery, and
+		other needs of IoT application developers.
+		Utilizing NDN naming conventions, NDN-LITE aims to create an open environment where IoT applications and different services can easily cooperate and work together. </p>
+
+	<ul class="actions">
+		<li><a href="https://conferences.sigcomm.org/acm-icn/2018/index.php" class="button">ACM ICN 2018 Poster
+				(Best Poster Award)</a></li>
+		<li><a href="https://ndn-lite.named-data.net/" class="button">NDN-Lite home page</a></li>
+		<li><a href="https://github.com/named-data-iot/ndn-lite" class="button">NDN-Lite GitHub Repo</a></li>
+	</ul>
+
+	<hr class="major" />
+
+	<h2>Leaker Identification in Personally Identifiable Information (PII) Sharing</h2>
+
+	<span class="image right"><img src="images/leaker.jpg" alt="" /></span>
+
+	<p>Data sharing among multiple parties becomes increasingly
+		common today, so is the potential for data leakage.
+		As required by new data protection regulations and laws, when
+		data leakage occurs, one must be able to reliably identify the
+		leaking party. Existing solutions utilize watermark technology or
+		data object allocation strategy to differentiate the data shared
+		with different parties to identify potential leakers. However
+		the differentiation loses its effectiveness under several attacks,
+		including a data sender who leaks the data, or a leaker who denies
+		the reception of certain shared data. Worse yet, multiple parties
+		might collude and apply a set of operations such as intersection,
+		complement, and union to the shared dataset before leaking it,
+		making leaker identification more difficult.</p>
+
+	<p>In this work, we propose AuditShare, a sharing system of
+		Personally Identifiable Information dataset with reliable leaking
+		source identification. First, AuditShare takes advantage of the
+		intrinsic properties of identifiable data and allocates data objects
+		to individual sharing parties by personally identifiable attribute.
+		Second, AuditShare uses oblivious data transfer between the
+		sender and receivers, and employs dataset merkle tree as an
+		immutable record of the sharing. Third, a knowledge-based
+		identification algorithm is proposed in AuditShare to identify
+		both non-collusive and collusive leakers. Our evaluation shows
+		that, the sharing is practical and with a modest amount of
+		leaked data, AuditShare can accurately (with accuracy>99%)
+		and undeniably identify the guilty party(s) in cases of noncollusive
+		leakage, or collusive leakage by any number of data
+		receivers, or even leakage by the data sender.</p>
+
+	<ul class="actions">
+		<li><a href="https://arxiv.org/abs/1907.11833" class="button">Preprint Paper (Previous Version)</a></li>
+	</ul>
+
+
+	<hr class="major" />
+
+	<h2>Permissioned Distributed Ledger</h2>
+
+	<span class="image right"><img src="images/dledger.png" alt="" /></span>
 
 	<p>With the ever growing Internet of Things (IoT) market, ledger systems are facing new challenges to efficiently
 		store and secure enormous customer records collected by the IoT devices. The authenticity, availability, and
@@ -35,7 +103,9 @@ title: zhiyi-research-topics
 
 	<hr class="major" />
 
-	<h2>DDoS Defense</h2>
+	<h2>DDoS Defense with Stateful Forwarding</h2>
+
+	<span class="image left"><img src="images/fitt.png" alt="" /></span>
 
 	<p>Distributed Denial of Service (DDoS) attacks have plagued the Internet for decades, but defenses have not
 		fundamentally outpaced attackers. Instead, the size and rate of growth in attacks have actually outpaced carriers'
@@ -60,27 +130,7 @@ title: zhiyi-research-topics
 
 	<hr class="major" />
 
-	<h2>Internet of Things (IoT)</h2>
-
-	<span class="image left"><img src="images/ndn-lite-logo.jpg" alt="" /></span>
-
-	<p>The Named Data Networking (NDN) architecture provides simple solutions to the communication needs of Internet of
-		Things (IoT) in terms of ease-of-use, security, and content delivery. To utilize the desirable properties of NDN
-		architecture in IoT scenarios, we are working to provide an integrated framework, dubbed NDNoT, to support IoT over
-		NDN. NDNoT provides solutions to auto conguration, service discovery, data-centric security, content delivery, and
-		other needs of IoT application developers. Utilizing NDN naming conventions, NDNoT aims to create an open environment
-		where IoT applications and different services can easily cooperate and work together. </p>
-
-	<ul class="actions">
-		<li><a href="https://conferences.sigcomm.org/acm-icn/2018/index.php" class="button">ACM ICN 2018 Poster
-				(Best Poster Award)</a></li>
-		<li><a href="https://ndn-lite.named-data.net/" class="button">NDN-Lite home page</a></li>
-		<li><a href="https://github.com/named-data-iot/ndn-lite" class="button">NDN-Lite GitHub Repo</a></li>
-	</ul>
-
-	<hr class="major" />
-
-	<h2>Name-based Access Control over Named Data Networking (NDN)</h2>
+	<h2>Name-based Access Control over NDN</h2>
 	<p>Confidentiality of data in Named Data Networking (NDN) architecture can be directly ensured through encryption by
 		protecting the data packets rather than relying on a secured host or channel as any traditional perimeter-based
 		access control models do. However, the use of encryption requires efficient and easy-to-use mechanisms for access
@@ -95,7 +145,7 @@ title: zhiyi-research-topics
 
 	<hr class="major" />
 
-	<h2>Certificate Management over Named Data Networking (NDN)</h2>
+	<h2>Certificate Management over NDN</h2>
 	<p>Named Data Networking (NDN) secures communication at the network layer by requiring all data packets to be signed
 		when produced, ensuring data authentication and integrity. As obtaining certicates is essential to signature signing
 		and verication, to widely apply digital signature at the network layer, NDN requires usable mechanisms to handle
