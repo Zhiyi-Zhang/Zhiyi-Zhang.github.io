@@ -1,7 +1,4 @@
-NDN's code review
-============
-
-By Zhiyi Zhang (zhiyi@cs.ucla.edu)
+>By Zhiyi Zhang (zhiyi@cs.ucla.edu)
 
 Contents:
 --------
