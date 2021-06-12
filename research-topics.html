@@ -9,31 +9,21 @@ title: zhiyi-research-topics
 
 	<span class="image right"><img src="images/security.jpg" alt="" /></span>
 
-	<p>My research topics fall into /system/security, including security and privacy enhancement in network system,
-		distributed system, and data engineering. Since I started my Ph.D., I am trying to solve real-world security and
-		privacy issues.</p>
-
-	<p>Named Data Networking (NDN) is a proposed future Internet architecture which considers security from the first day
-		of its design. NDN requires every data publisher (called producer) to digitally sign their content. I have worked on
-		certificate management and access control over NDN, and I am also contributing to the core NDN software like
-		ndn-cxx, ndn-lite, and NFD.</p>
-
+	<p>My research interests fall into the category of /system/security. 
+		Most of my research works are to enhance security and privacy in network systems.
+	</p>
 
 	<hr class="major" />
 
-	<h2>Secure Smart Home IoT System</h2>
+	<h2>Secure Smart Home System</h2>
 
 	<span class="image left"><img src="images/ndn-lite-logo.jpg" alt="" /></span>
 
-	<p>What distinguishes our work is that we are trying to localize the security to empower end users.
-		With current solutions, the device authentication and access control by default go through the cloud (e.g., you need Internet connection to add a new device to your system) and the security largely relies on IoT app developers’ careful work.
-		In our work, NDN-LITE, we are building security independent from the cloud and all the security checking/verification is automatically enforced by our system framework and is transparent to developers.</p>
-
-		<p>NDN-LITE is over Named Data Networking (NDN), an architecture that provides simple solutions to the communication needs of Internet of Things (IoT) in terms of ease-of-use, security, and content delivery.
-		To utilize the desirable properties of NDN architecture in IoT scenarios, we are working to provide an integrated framework, dubbed NDN-LITE, to support IoT over NDN.
-		NDN-LITE provides solutions to auto conguration, service discovery, data-centric security, content delivery, and
-		other needs of IoT application developers.
-		Utilizing NDN naming conventions, NDN-LITE aims to create an open environment where IoT applications and different services can easily cooperate and work together. </p>
+	<p> What distinguishes our work is that we are trying to bring the control of smart home from the cloud to home to empower end users.
+		With current practice, the device authentication and access control by default go through the cloud (for example, you need Internet connection to add a new home device).
+		In our work, Sovereign, we are building home control that is independent of the external cloud servers and all the security checking/verification is automatically enforced by our system framework locally.
+		We build our framework over Named Data Networking (NDN) to utilize the wireless broadcast network (instead of building one-to-one IP connection over broadcast) and boost the security policymaking with names.
+	</p>
 
 	<ul class="actions">
 		<li><a href="https://conferences.sigcomm.org/acm-icn/2018/index.php" class="button">ACM ICN 2018 Poster
