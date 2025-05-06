@@ -1,0 +1,65 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GET Request Example</title>
+</head>
+<body>
+    <p>Send Traffic to localhost:10088</p>
+    <button id="send-request">Send GET Request</button>
+    <button id="send-https-request">Send GET Request via HTTPS</button>
+
+    <div id="response"></div>
+
+    <script>
+        // Get the button and response elements
+        const button = document.getElementById('send-request');
+        const httpsButton = document.getElementById('send-https-request');
+        const responseDiv = document.getElementById('response');
+        // Add an event listener to the button
+        button.addEventListener('click', () => {
+            responseDiv.innerText = `${new Date().toISOString()}: About to send HTTP request\n`;
+            // Send a GET request to localhost:10088
+            fetch('http://localhost:10088')
+                .then(response => {
+                    if (response.ok) {
+                        return response.text();
+                    } else {
+                        responseDiv.innerText += `${new Date().toISOString()}: HTTP error! status: ${response.status}`;
+                    }
+                })
+                .then(data => {
+                    // Display the response data
+                    responseDiv.innerText += `${new Date().toISOString()}: Response: ${data}`;
+                })
+                .catch(error => {
+                    // Display any errors
+                    responseDiv.innerText += `${new Date().toISOString()}: Error: ${error.message}`;
+                });
+        });
+        // Add an event listener to the button
+        httpsButton.addEventListener('click', () => {
+            responseDiv.innerText = `${new Date().toISOString()}: About to send HTTPS request\n`;
+            // Send a GET request to localhost:10088
+            fetch('https://localhost:10088')
+                .then(response => {
+                    if (response.ok) {
+                        return response.text();
+                    } else {
+                        responseDiv.innerText += `${new Date().toISOString()}: HTTP error! status: ${response.status}`;
+                    }
+                })
+                .then(data => {
+                    // Display the response data
+                    responseDiv.innerText += `${new Date().toISOString()}: Response: ${data}`;
+                })
+                .catch(error => {
+                    // Display any errors
+                    responseDiv.innerText += `${new Date().toISOString()}: Error: ${error.message}`;
+                });
+        });
+    </script>
+</body>
+</html>
