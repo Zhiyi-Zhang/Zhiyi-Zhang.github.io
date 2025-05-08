@@ -22,7 +22,7 @@
         button.addEventListener('click', () => {
             responseDiv.innerText = `${new Date().toISOString()}: About to send HTTP request\n`;
             // Send a GET request to localhost:10088
-            fetch('http://localhost:10088')
+            fetch('http://local.zhiyi-zhang.com:10088')
                 .then(response => {
                     if (response.ok) {
                         return response.text();
