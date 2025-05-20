@@ -1,0 +1,94 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UDP Request Example</title>
+  <script>
+    /* eslint-env browser */
+
+    let log = msg => {
+      document.getElementById('logs').innerHTML += msg + '<br>'
+    }
+
+    function monitorEventsOnConnection(pc) {
+      pc.oniceconnectionstatechange = e => {
+        log("pc.iceConnectionState: " + pc.iceConnectionState)
+        if (pc.iceConnectionState == 'connected') {
+          let pair = pc.sctp.transport.iceTransport.getSelectedCandidatePair()
+          log('selected remote candidate = ' + pair.remote.candidate)
+
+          // listen to ice transport candidate change
+          pc.sctp.transport.iceTransport.onselectedcandidatepairchange = e => {
+            let pair = pc.sctp.transport.iceTransport.getSelectedCandidatePair()
+            log('selected pair = ' + pair)
+          }
+        }
+      }
+      pc.onicegatheringstatechange = e => {
+        log("pc.iceGatheringState: " + pc.iceGatheringState)
+      }
+      pc.onicecandidate = e => {
+        log("onicecandidate: " + (e.candidate == null ? 'null' : e.candidate.candidate))
+        if (e.candidate != null && e.candidate.candidate != null && e.candidate.candidate.indexOf('srflx') != -1) {
+          log("onicecandidate: srflx! so we hit the server")
+        }
+      }
+      pc.onicecandidateerror = e => log(e)
+    }
+
+    var sendChannel = null
+    const urlParams = new URLSearchParams(window.location.search);
+    const pc = new RTCPeerConnection({
+      iceServers: [
+        {
+          urls: 'turn:127.0.0.1:5000',
+          username: 'hellohello',
+          credential: 'secretsecret',
+        }
+      ]
+    });
+    monitorEventsOnConnection(pc)
+
+    sendChannel = pc.createDataChannel('foo')
+    pc.createOffer().then(offer => {
+      pc.setLocalDescription(offer)
+    })
+
+
+    sendChannel.onclose = () => log('sendChannel has closed')
+    sendChannel.onopen = () => log('sendChannel has opened')
+    sendChannel.onmessage = e => {
+      const endTime = performance.now();
+      const duration = endTime - startTime;
+
+      log(`Message from DataChannel '${sendChannel.label}' payload '${e.data}' duration: ${duration}`);
+
+      // immediately close the *connection*
+      // pc.close();
+    }
+
+    window.sendMessage = () => {
+      let message = document.getElementById('message').value
+      if (message === '') {
+        return alert('Message must not be empty')
+      }
+
+      // Don't send it - we only need to receive server message
+      // sendChannel.send(message)
+    }
+  </script>
+</head>
+
+<body>
+  Message: <textarea id="message">c.msg.1!</textarea> <br />
+  <button onclick="window.sendMessage()"> Send Message </button> <br />
+  Logs<br />
+  <div id="div"></div>
+
+  <div id="logs"></div>
+</body>
+
+</html>
