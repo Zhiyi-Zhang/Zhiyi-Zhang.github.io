@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Device/Browser/OS Info Test</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body { font-family: Arial, sans-serif; margin: 2em; background: #f9f9f9; }
+    h1 { color: #2c3e50; }
+    .info-section { background: #fff; border-radius: 8px; box-shadow: 0 2px 8px #ddd; margin-bottom: 2em; padding: 1em 2em; }
+    .info-section h2 { color: #2980b9; margin-top: 0; }
+    .info-list { list-style: none; padding: 0; }
+    .info-list li { margin-bottom: 0.5em; }
+    .label { font-weight: bold; color: #34495e; }
+    .value { color: #16a085; }
+    .error { color: #e74c3c; }
+  </style>
+</head>
+<body>
+  <h1>Device/Browser/OS Info Test</h1>
+  <div class="info-section" id="navigator-info">
+    <h2>Navigator Object</h2>
+    <ul class="info-list" id="navigator-list"></ul>
+  </div>
+  <div class="info-section" id="useragent-info">
+    <h2>User Agent Parsing</h2>
+    <ul class="info-list" id="useragent-list"></ul>
+  </div>
+  <div class="info-section" id="screen-info">
+    <h2>Screen &amp; Viewport</h2>
+    <ul class="info-list" id="screen-list"></ul>
+  </div>
+  <div class="info-section" id="touch-info">
+    <h2>Touch/Input Capabilities</h2>
+    <ul class="info-list" id="touch-list"></ul>
+  </div>
+  <div class="info-section" id="mobile-apis-info">
+    <h2>Mobile-Specific APIs</h2>
+    <ul class="info-list" id="mobileapis-list"></ul>
+  </div>
+  <script>
+    // 1. Navigator Object
+    const navigatorList = document.getElementById('navigator-list');
+    const navProps = [
+      ['userAgent', navigator.userAgent],
+      ['platform', navigator.platform],
+      ['appVersion', navigator.appVersion],
+      ['vendor', navigator.vendor],
+      ['language', navigator.language],
+      ['languages', navigator.languages ? navigator.languages.join(', ') : 'N/A'],
+      ['onLine', navigator.onLine],
+      ['cookieEnabled', navigator.cookieEnabled],
+      ['hardwareConcurrency', navigator.hardwareConcurrency],
+      ['maxTouchPoints', navigator.maxTouchPoints],
+      ['deviceMemory', navigator.deviceMemory || 'N/A'],
+    ];
+    navProps.forEach(([label, value]) => {
+      const li = document.createElement('li');
+      li.innerHTML = `<span class="label">${label}:</span> <span class="value">${value}</span>`;
+      navigatorList.appendChild(li);
+    });
+    // 2. User Agent Parsing
+    function parseUserAgent(ua) {
+      const isAndroid = /Android/i.test(ua);
+      const isIOS = /iPhone|iPad|iPod/i.test(ua);
+      const isMobile = /Mobile/i.test(ua);
+      const browser = (() => {
+        if (/CriOS/i.test(ua)) return "Chrome (iOS)";
+        if (/Chrome/i.test(ua)) return "Chrome";
+        if (/FxiOS/i.test(ua)) return "Firefox (iOS)";
+        if (/Firefox/i.test(ua)) return "Firefox";
+        if (/Safari/i.test(ua) && !/Chrome/i.test(ua)) return "Safari";
+        if (/EdgiOS/i.test(ua)) return "Edge (iOS)";
+        if (/EdgA/i.test(ua)) return "Edge (Android)";
+        if (/Edge/i.test(ua)) return "Edge";
+        return "Unknown";
+      })();
+      const os = isAndroid ? "Android" : isIOS ? "iOS" : "Other/Unknown";
+      return { isAndroid, isIOS, isMobile, browser, os };
+    }
+    const uaInfo = parseUserAgent(navigator.userAgent);
+    const userAgentList = document.getElementById('useragent-list');
+    Object.entries(uaInfo).forEach(([label, value]) => {
+      const li = document.createElement('li');
+      li.innerHTML = `<span class="label">${label}:</span> <span class="value">${value}</span>`;
+      userAgentList.appendChild(li);
+    });
+    // 3. Screen & Viewport
+    const screenList = document.getElementById('screen-list');
+    const screenProps = [
+      ['screen.width', window.screen.width],
+      ['screen.height', window.screen.height],
+      ['screen.availWidth', window.screen.availWidth],
+      ['screen.availHeight', window.screen.availHeight],
+      ['window.innerWidth', window.innerWidth],
+      ['window.innerHeight', window.innerHeight],
+      ['devicePixelRatio', window.devicePixelRatio],
+      ['orientation (type)', (screen.orientation && screen.orientation.type) || 'N/A'],
+      ['orientation (angle)', (screen.orientation && screen.orientation.angle) || 'N/A'],
+    ];
+    screenProps.forEach(([label, value]) => {
+      const li = document.createElement('li');
+      li.innerHTML = `<span class="label">${label}:</span> <span class="value">${value}</span>`;
+      screenList.appendChild(li);
+    });
+    // 4. Touch/Input Capabilities
+    const touchList = document.getElementById('touch-list');
+    const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    const touchProps = [
+      ['ontouchstart in window', 'ontouchstart' in window],
+      ['navigator.maxTouchPoints', navigator.maxTouchPoints],
+      ['Touch support', isTouchDevice],
+      ['Pointer events', window.PointerEvent ? 'Supported' : 'Not supported'],
+    ];
+    touchProps.forEach(([label, value]) => {
+      const li = document.createElement('li');
+      li.innerHTML = `<span class="label">${label}:</span> <span class="value">${value}</span>`;
+      touchList.appendChild(li);
+    });
+    // 5. Mobile-Specific APIs
+    const mobileApisList = document.getElementById('mobileapis-list');
+    // Battery API
+    if (navigator.getBattery) {
+      navigator.getBattery().then(battery => {
+        [
+          ['Battery charging', battery.charging],
+          ['Battery level', (battery.level * 100) + '%'],
+          ['Battery chargingTime', battery.chargingTime + 's'],
+          ['Battery dischargingTime', battery.dischargingTime + 's'],
+        ].forEach(([label, value]) => {
+          const li = document.createElement('li');
+          li.innerHTML = `<span class="label">${label}:</span> <span class="value">${value}</span>`;
+          mobileApisList.appendChild(li);
+        });
+      }).catch(() => {
+        const li = document.createElement('li');
+        li.innerHTML = `<span class="label">Battery API:</span> <span class="error">Error accessing battery info</span>`;
+        mobileApisList.appendChild(li);
+      });
+    } else {
+      const li = document.createElement('li');
+      li.innerHTML = `<span class="label">Battery API:</span> <span class="error">Not supported</span>`;
+      mobileApisList.appendChild(li);
+    }
+    // Network Information API
+    if (navigator.connection) {
+      [
+        ['Connection type', navigator.connection.effectiveType],
+        ['Downlink', navigator.connection.downlink + ' Mbps'],
+        ['RTT', navigator.connection.rtt + ' ms'],
+        ['Save Data', navigator.connection.saveData],
+      ].forEach(([label, value]) => {
+        const li = document.createElement('li');
+        li.innerHTML = `<span class="label">${label}:</span> <span class="value">${value}</span>`;
+        mobileApisList.appendChild(li);
+      });
+    } else {
+      const li = document.createElement('li');
+      li.innerHTML = `<span class="label">Network Information API:</span> <span class="error">Not supported</span>`;
+      mobileApisList.appendChild(li);
+    }
+    // Vibration API
+    if (navigator.vibrate) {
+      navigator.vibrate(200);
+      const li = document.createElement('li');
+      li.innerHTML = `<span class="label">Vibration API:</span> <span class="value">Vibrated for 200ms</span>`;
+      mobileApisList.appendChild(li);
+    } else {
+      const li = document.createElement('li');
+      li.innerHTML = `<span class="label">Vibration API:</span> <span class="error">Not supported</span>`;
+      mobileApisList.appendChild(li);
+    }
+  </script>
+</body>
+</html>
