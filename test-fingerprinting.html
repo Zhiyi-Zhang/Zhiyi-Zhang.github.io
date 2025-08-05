@@ -1,21 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Device/Browser/OS Info Test</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
-    body { font-family: Arial, sans-serif; margin: 2em; background: #f9f9f9; }
-    h1 { color: #2c3e50; }
-    .info-section { background: #fff; border-radius: 8px; box-shadow: 0 2px 8px #ddd; margin-bottom: 2em; padding: 1em 2em; }
-    .info-section h2 { color: #2980b9; margin-top: 0; }
-    .info-list { list-style: none; padding: 0; }
-    .info-list li { margin-bottom: 0.5em; }
-    .label { font-weight: bold; color: #34495e; }
-    .value { color: #16a085; }
-    .error { color: #e74c3c; }
+    body {
+      font-family: Arial, sans-serif;
+      margin: 2em;
+      background: #f9f9f9;
+    }
+
+    h1 {
+      color: #2c3e50;
+    }
+
+    .info-section {
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px #ddd;
+      margin-bottom: 2em;
+      padding: 1em 2em;
+    }
+
+    .info-section h2 {
+      color: #2980b9;
+      margin-top: 0;
+    }
+
+    .info-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .info-list li {
+      margin-bottom: 0.5em;
+    }
+
+    .label {
+      font-weight: bold;
+      color: #34495e;
+    }
+
+    .value {
+      color: #16a085;
+    }
+
+    .error {
+      color: #e74c3c;
+    }
   </style>
 </head>
+
 <body>
   <h1>Device/Browser/OS Info Test</h1>
   <div class="info-section" id="navigator-info">
@@ -37,6 +74,10 @@
   <div class="info-section" id="mobile-apis-info">
     <h2>Mobile-Specific APIs</h2>
     <ul class="info-list" id="mobileapis-list"></ul>
+  </div>
+  <div class="info-section" id="locale-info">
+    <h2>Other Information</h2>
+    <ul class="info-list" id="loctz-list"></ul>
   </div>
   <script>
     // 1. Navigator Object
@@ -170,6 +211,38 @@
       li.innerHTML = `<span class="label">Vibration API:</span> <span class="error">Not supported</span>`;
       mobileApisList.appendChild(li);
     }
+
+    // 6. Location/TimeZone/Other Information
+    const locTZList = document.getElementById('loctz-list');
+    const canvas = document.createElement('canvas');
+    const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+    var unmaskedVendor = null;
+    var unmaskedRenderer = null;
+    var maskedVendor = null;
+    var maskedRenderer = null;
+    if (gl) {
+      maskedVendor = gl.getParameter(gl.VENDOR);
+      maskedRenderer = gl.getParameter(gl.RENDERER);
+      const debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
+      if (debugInfo) {
+        unmaskedVendor = gl.getParameter(debugInfo.UNMASKED_VENDOR_WEBGL);
+        unmaskedRenderer = gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL);
+      }
+    }
+
+    [
+      ['navigator.timezone', Intl.DateTimeFormat().resolvedOptions().timeZone],
+      ['navigator.language', navigator.languages ? navigator.languages.join(', ') : 'N/A'],
+      ['webgl unmasked vendor', unmaskedVendor ? unmaskedVendor : 'N/A'],
+      ['webgl unmasked renderer', unmaskedRenderer ? unmaskedRenderer : 'N/A'],
+      ['webgl masked vendor', maskedVendor ? maskedVendor : 'N/A'],
+      ['webgl masked renderer', maskedRenderer ? maskedRenderer : 'N/A'],
+    ].forEach(([label, value]) => {
+      const li = document.createElement('li');
+      li.innerHTML = `<span class="label">${label}:</span> <span class="value">${value}</span>`;
+      locTZList.appendChild(li);
+    });
   </script>
 </body>
+
 </html>
