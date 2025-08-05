@@ -75,9 +75,9 @@
     <h2>Mobile-Specific APIs</h2>
     <ul class="info-list" id="mobileapis-list"></ul>
   </div>
-  <div class="info-section" id="locale-info">
+  <div class="info-section" id="other-info">
     <h2>Other Information</h2>
-    <ul class="info-list" id="loctz-list"></ul>
+    <ul class="info-list" id="other-list"></ul>
   </div>
   <script>
     // 1. Navigator Object
@@ -213,7 +213,7 @@
     }
 
     // 6. Location/TimeZone/Other Information
-    const locTZList = document.getElementById('loctz-list');
+    const otherList = document.getElementById('other-list');
     const canvas = document.createElement('canvas');
     const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
     var unmaskedVendor = null;
@@ -237,11 +237,43 @@
       ['webgl unmasked renderer', unmaskedRenderer ? unmaskedRenderer : 'N/A'],
       ['webgl masked vendor', maskedVendor ? maskedVendor : 'N/A'],
       ['webgl masked renderer', maskedRenderer ? maskedRenderer : 'N/A'],
+      ['plugins', getPlugins().join(', ')],
+      ['fonts', getFonts().join(', ')],
     ].forEach(([label, value]) => {
       const li = document.createElement('li');
       li.innerHTML = `<span class="label">${label}:</span> <span class="value">${value}</span>`;
-      locTZList.appendChild(li);
+      otherList.appendChild(li);
     });
+
+
+    // helper functions
+    function getPlugins() {
+      if (navigator.plugins) {
+        return Array.from(navigator.plugins).map(plugin => plugin.name);
+      }
+      return [];
+    }
+
+    function isFontAvailable(font) {
+      const testString = "mmmmmmmmmmlli";
+      const testSize = "72px";
+      const canvas = document.createElement("canvas");
+      const context = canvas.getContext("2d");
+      // Fallback font
+      context.font = `${testSize} monospace`;
+      const baselineSize = context.measureText(testString).width;
+      // Test font
+      context.font = `${testSize} '${font}', monospace`;
+      const newSize = context.measureText(testString).width;
+      return newSize !== baselineSize;
+    }
+
+    function getFonts() {
+      const fontsToTest = ["Arial", "Times New Roman", "Comic Sans MS", "Papyrus", "Courier New", "Impact", "Verdana", "Georgia", "Trebuchet MS", "Lucida Sans Unicode", "Palatino Linotype", "Garamond", "Tahoma", "Geneva", "Arial Black", "Lucida Console", "Courier", "Monaco", "Helvetica", "Helvetica Neue", "Optima", "Arial Narrow", "Calibri", "Segoe UI", "Segoe UI Emoji", "Segoe UI Symbol", "Candara", "Franklin Gothic Medium", "Century Gothic", "Roboto", "Open Sans", "Lato"];
+      const availableFonts = fontsToTest.filter(isFontAvailable);
+      return availableFonts;
+    }
+
   </script>
 </body>
 
