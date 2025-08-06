@@ -79,7 +79,7 @@
     <h2>Other Information</h2>
     <ul class="info-list" id="other-list"></ul>
   </div>
-  <script>
+  <script type="module">
     // 1. Navigator Object
     const navigatorList = document.getElementById('navigator-list');
     const navProps = [
@@ -229,7 +229,7 @@
         unmaskedRenderer = gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL);
       }
     }
-
+    var textImage = await sha256(getCanvasFingerprint());
     [
       ['navigator.timezone', Intl.DateTimeFormat().resolvedOptions().timeZone],
       ['navigator.language', navigator.languages ? navigator.languages.join(', ') : 'N/A'],
@@ -239,6 +239,7 @@
       ['webgl masked renderer', maskedRenderer ? maskedRenderer : 'N/A'],
       ['plugins', getPlugins().join(', ')],
       ['fonts', getFonts().join(', ')],
+      ['canvas text image fingerprint', textImage],
     ].forEach(([label, value]) => {
       const li = document.createElement('li');
       li.innerHTML = `<span class="label">${label}:</span> <span class="value">${value}</span>`;
@@ -272,6 +273,46 @@
       const fontsToTest = ["Arial", "Times New Roman", "Comic Sans MS", "Papyrus", "Courier New", "Impact", "Verdana", "Georgia", "Trebuchet MS", "Lucida Sans Unicode", "Palatino Linotype", "Garamond", "Tahoma", "Geneva", "Arial Black", "Lucida Console", "Courier", "Monaco", "Helvetica", "Helvetica Neue", "Optima", "Arial Narrow", "Calibri", "Segoe UI", "Segoe UI Emoji", "Segoe UI Symbol", "Candara", "Franklin Gothic Medium", "Century Gothic", "Roboto", "Open Sans", "Lato"];
       const availableFonts = fontsToTest.filter(isFontAvailable);
       return availableFonts;
+    }
+
+    function getCanvasFingerprint() {
+      const canvas = document.createElement('canvas')
+      canvas.width = 240
+      canvas.height = 60
+      const context = canvas.getContext("2d");
+      context.textBaseline = 'alphabetic'
+      context.fillStyle = '#f60'
+      context.fillRect(100, 1, 62, 20)
+
+      context.fillStyle = '#069'
+      context.font = '11pt "Times New Roman"'
+      const printedText = `Cwm fjordbank gly ${String.fromCharCode(55357, 56835) /* 😃 */}`
+      context.fillText(printedText, 2, 15)
+      context.fillStyle = 'rgba(102, 204, 0, 0.2)'
+      context.font = '18pt Arial'
+      context.fillText(printedText, 4, 45)
+
+      const textImage1 = canvas.toDataURL();
+      const textImage2 = canvas.toDataURL();
+
+      if (textImage1 !== textImage2) {
+        console.log('Canvas fingerprinting not stable!');
+        return 'N/A';
+      }
+      // return the sha256 of the text image
+      return textImage1;
+    }
+
+    async function sha256(message) {
+      // Encode the string as a Uint8Array
+      const encoder = new TextEncoder();
+      const data = encoder.encode(message);
+      // Hash the data
+      const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+      // Convert ArrayBuffer to hex string
+      const hashArray = Array.from(new Uint8Array(hashBuffer));
+      const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+      return hashHex;
     }
 
   </script>
