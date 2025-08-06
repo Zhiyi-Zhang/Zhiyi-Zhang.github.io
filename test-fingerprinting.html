@@ -229,7 +229,8 @@
         unmaskedRenderer = gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL);
       }
     }
-    var textImage = await sha256(getCanvasFingerprint());
+    const textImage = getCanvasFingerprint();
+    const hashedTextImage = textImage=='N/A'? 'N/A' : await sha256();
     [
       ['navigator.timezone', Intl.DateTimeFormat().resolvedOptions().timeZone],
       ['navigator.language', navigator.languages ? navigator.languages.join(', ') : 'N/A'],
@@ -239,7 +240,7 @@
       ['webgl masked renderer', maskedRenderer ? maskedRenderer : 'N/A'],
       ['plugins', getPlugins().join(', ')],
       ['fonts', getFonts().join(', ')],
-      ['canvas text image fingerprint', textImage],
+      ['canvas text image fingerprint', hashedTextImage],
     ].forEach(([label, value]) => {
       const li = document.createElement('li');
       li.innerHTML = `<span class="label">${label}:</span> <span class="value">${value}</span>`;
