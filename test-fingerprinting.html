@@ -229,8 +229,10 @@
         unmaskedRenderer = gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL);
       }
     }
-    const textImage = getCanvasFingerprint();
-    const hashedTextImage = textImage=='N/A'? 'N/A' : await sha256();
+    const textImage = getCanvasText();
+    const geometryImage = getCanvasGeometryImage();
+    const hashedTextImage = textImage == 'N/A' ? 'N/A' : await sha256(textImage);
+    const hashedGeometryImage = await sha256(geometryImage);
     [
       ['navigator.timezone', Intl.DateTimeFormat().resolvedOptions().timeZone],
       ['navigator.language', navigator.languages ? navigator.languages.join(', ') : 'N/A'],
@@ -240,7 +242,8 @@
       ['webgl masked renderer', maskedRenderer ? maskedRenderer : 'N/A'],
       ['plugins', getPlugins().join(', ')],
       ['fonts', getFonts().join(', ')],
-      ['canvas text image fingerprint', hashedTextImage],
+      ['canvas text image hashed', hashedTextImage],
+      ['canvas geometry image hashed', hashedGeometryImage],
     ].forEach(([label, value]) => {
       const li = document.createElement('li');
       li.innerHTML = `<span class="label">${label}:</span> <span class="value">${value}</span>`;
@@ -276,7 +279,7 @@
       return availableFonts;
     }
 
-    function getCanvasFingerprint() {
+    function getCanvasText() {
       const canvas = document.createElement('canvas')
       canvas.width = 240
       canvas.height = 60
@@ -302,6 +305,40 @@
       }
       // return the sha256 of the text image
       return textImage1;
+    }
+
+    function getCanvasGeometryImage() {
+      const canvas = document.createElement('canvas')
+      const context = canvas.getContext("2d");
+      // Resizing the canvas cleans it
+      canvas.width = 122
+      canvas.height = 110
+
+      // Canvas blending
+      // https://web.archive.org/web/20170826194121/http://blogs.adobe.com/webplatform/2013/01/28/blending-features-in-canvas/
+      // http://jsfiddle.net/NDYV8/16/
+      context.globalCompositeOperation = 'multiply'
+      for (const [color, x, y] of [
+        ['#f2f', 40, 40],
+        ['#2ff', 80, 40],
+        ['#ff2', 60, 80],
+      ]) {
+        context.fillStyle = color
+        context.beginPath()
+        context.arc(x, y, 40, 0, Math.PI * 2, true)
+        context.closePath()
+        context.fill()
+      }
+
+      // Canvas winding
+      // https://web.archive.org/web/20130913061632/http://blogs.adobe.com/webplatform/2013/01/30/winding-rules-in-canvas/
+      // http://jsfiddle.net/NDYV8/19/
+      context.fillStyle = '#f9c'
+      context.arc(60, 60, 60, 0, Math.PI * 2, true)
+      context.arc(60, 60, 20, 0, Math.PI * 2, true)
+      context.fill('evenodd')
+
+      return canvas.toDataURL();
     }
 
     async function sha256(message) {
