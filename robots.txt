@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+Disallow: /enigma_https.html
+Disallow: /enigma_turn.html
+Disallow: /test-fingerprinting.html
+Disallow: /_experiments/
+Disallow: /*.crt$
+Disallow: /ca.crt
+
+Sitemap: https://zhiyi-zhang.com/sitemap.xml

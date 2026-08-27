@@ -4,45 +4,50 @@
     Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 -->
 <!--
-	Editorial by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+    Editorial by HTML5 UP
+    html5up.net | @ajlkn
+    Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 -->
-<html>
-
+<html lang="en">
 <head>
-    <title>{{ page.title }}</title>
     <meta charset="utf-8" />
-    <link rel="icon" href="/icon.png">
+    <title>{% if page.title %}{{ page.title | escape }} | {{ site.title }}{% else %}{{ site.title }}{% endif %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <meta name="description" content="{{ page.excerpt | default: site.description | strip_html | normalize_whitespace | truncate: 160 | escape }}" />
+    <meta name="author" content="{{ site.author | default: site.title }}" />
+    <link rel="canonical" href="{{ page.url | replace:'index.html','' | absolute_url }}" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="{{ page.url | absolute_url }}" />
+    <meta property="og:title" content="{% if page.title %}{{ page.title | escape }}{% else %}{{ site.title }}{% endif %}" />
+    <meta property="og:description" content="{{ page.excerpt | default: site.description | strip_html | normalize_whitespace | truncate: 160 | escape }}" />
+    <meta property="og:image" content="{{ '/images/headpic.jpg' | absolute_url }}" />
+    <meta name="twitter:card" content="summary" />
+    {% seo %}
+    <link rel="icon" href="/icon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://kit.fontawesome.com" crossorigin>
     <link rel="stylesheet" href="/assets/css/main.css" />
     <script src="https://kit.fontawesome.com/7d40fa654a.js" crossorigin="anonymous"></script>
 </head>
-
 <body class="is-preload">
+    <a href="#main" class="skip-link" style="position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;">Skip to content</a>
     <!-- Wrapper -->
     <div id="wrapper">
         <!-- Main -->
         <div id="main">
             <div class="inner">
-
                 {% include header.html %}
-                {{content }}
-
+                {{ content }}
             </div>
         </div>
-
         {% include navigator.html %}
-
     </div>
-
     <!-- Scripts -->
     <script src="/assets/js/jquery.min.js"></script>
     <script src="/assets/js/browser.min.js"></script>
     <script src="/assets/js/breakpoints.min.js"></script>
     <script src="/assets/js/util.js"></script>
-    <script src="/assets/js/main.js"></script>
-
+    <script src="/assets/js/main.js" defer></script>
 </body>
-
 </html>
